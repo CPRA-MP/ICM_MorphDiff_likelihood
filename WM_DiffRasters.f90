@@ -41,6 +41,8 @@ program main
     call GET_COMMAND_ARGUMENT(3,ras01_bin_pth)
     call GET_COMMAND_ARGUMENT(4,difftype)
     call GET_COMMAND_ARGUMENT(5,nras_str)
+    call GET_COMMAND_ARGUMENT(6,noData_str)
+    
     read(nras_str,*) nras
     if (difftype == 'dlw') then
         call DiffLW
