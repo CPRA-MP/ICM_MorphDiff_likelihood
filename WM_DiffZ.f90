@@ -43,7 +43,7 @@ subroutine DiffZ
         end if
     end do
 
-    open(unit=200, file = trim(adjustL(ras01_bin_pth)))
+    open(unit=200, file = trim(adjustL(ras01_bin_pth)),form='unformatted')
     write(*,'(A,A)') ' saved to: ',trim(adjustL(ras01_bin_pth))    
     write(200) ras01
     close(200)
