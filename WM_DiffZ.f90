@@ -34,6 +34,7 @@ subroutine DiffZ
     
 
     do i=1,nras
+        write(*,*) ras1(i),ras0(i)
         if (ras1(i) == noData) then
             ras01(i) = noData
         elseif (ras0(i) == noData) then
