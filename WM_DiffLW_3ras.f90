@@ -5,41 +5,6 @@ subroutine DiffLW_3ras
     ! lndtyp 4 = developed land/upland/etc. that are not modeled in ICM-LAVegMod
     ! lndtyp 5 = flotant marsh
     
-    ! combinations when comparison raster (ras0) is vegetated land (lndtyp=1)
-    ! no difference in landtype:        ras01 = 11
-    ! vegetated land loss:              ras01 = 12
-    ! loss of vegetation:               ras01 = 13
-    ! new upland from marsh:            ras01 = 14      ! this combination should not appear since this process is not currently in ICM-Morph
-    ! new flotant from marsh:           ras01 = 15      ! this combination should not appear since this process is not currently in ICM-Morph
-    
-    ! combinations when comparison raster (ras0) is water (lndtyp=2)
-    ! vegetated land gain:              ras01 = 21
-    ! no difference in landtype:        ras01 = 22
-    ! new bareground/mudflat:           ras01 = 23
-    ! new upland from water:            ras01 = 24      ! this combination should not appear since this process is not currently in ICM-Morph
-    ! new flotant from water:           ras01 = 25      ! this combination should not appear since this process is not currently in ICM-Morph
-    
-    ! combinations when comparison raster (ras0) is mudflat/bareground (lndtyp=3)
-    ! vegetation gain:                  ras01 = 31
-    ! bareground/mudflat land loss:     ras01 = 32
-    ! no difference in landtype:        ras01 = 33
-    ! new upland from bareground:       ras01 = 34      ! this combination should not appear since this process is not currently in ICM-Morph
-    ! new flotant from bareground:      ras01 = 35      ! this combination should not appear since this process is not currently in ICM-Morph
-        
-    ! combinations when comparison raster (ras0) is developed/upland (lndtyp=4)
-    ! vegetated marsh gain:             ras01 = 41      ! this combination should not appear since this process is not currently in ICM-Morph
-    ! upland/developed land loss:       ras01 = 42      ! this combination should not appear since this process is not currently in ICM-Morph
-    ! new bareground from upland:       ras01 = 43      ! this combination should not appear since this process is not currently in ICM-Morph
-    ! no difference in landtype:        ras01 = 44
-    ! new flotant from upland:          ras01 = 45      ! this combination should not appear since this process is not currently in ICM-Morph
-    
-    ! combinations when comparison raster (ras0) is flotant marsh (lndtyp=5)
-    ! vegetated land gain:              ras01 = 51
-    ! flotant marsh loss:               ras01 = 52
-    ! new bareground gain from flotant: ras01 = 53
-    ! new upland from flotant:          ras01 = 54      ! this combination should not appear since this process is not currently in ICM-Morph    
-    ! no difference in landtype:        ras01 = 55
-    
     use params
     implicit none
 
@@ -98,3 +63,108 @@ subroutine DiffLW_3ras
     
     return
 end
+
+
+    !  ras012 = 111     Initial:  vegetated wetland     FWOA:  vegetated wetland    FWA:  vegetated wetland     ! no difference in landtype
+    !  ras012 = 112     Initial:  vegetated wetland     FWOA:  vegetated wetland    FWA:  water                 ! induced loss
+    !  ras012 = 113     Initial:  vegetated wetland     FWOA:  vegetated wetland    FWA:  bare wetland          ! induced vegetation loss
+    !  ras012 = 121     Initial:  vegetated wetland     FWOA:  water                FWA:  vegetated wetland     ! land maintained
+    !  ras012 = 122     Initial:  vegetated wetland     FWOA:  water                FWA:  water                 ! loss under both
+    !  ras012 = 123     Initial:  vegetated wetland     FWOA:  water                FWA:  bare wetland          
+    !  ras012 = 131     Initial:  vegetated wetland     FWOA:  bare wetland         FWA:  vegetated wetland     
+    !  ras012 = 132     Initial:  vegetated wetland     FWOA:  bare wetland         FWA:  water                 
+    !  ras012 = 133     Initial:  vegetated wetland     FWOA:  bare wetland         FWA:  bare wetland          
+    !  ras012 = 211     Initial:  water                 FWOA:  vegetated wetland    FWA:  vegetated wetland     
+    !  ras012 = 212     Initial:  water                 FWOA:  vegetated wetland    FWA:  water                 
+    !  ras012 = 213     Initial:  water                 FWOA:  vegetated wetland    FWA:  bare wetland          
+    !  ras012 = 221     Initial:  water                 FWOA:  water                FWA:  vegetated wetland     ! land gain
+    !  ras012 = 222     Initial:  water                 FWOA:  water                FWA:  water                 ! no difference in landtype
+    !  ras012 = 223     Initial:  water                 FWOA:  water                FWA:  bare wetland          
+    !  ras012 = 231     Initial:  water                 FWOA:  bare wetland         FWA:  vegetated wetland     
+    !  ras012 = 232     Initial:  water                 FWOA:  bare wetland         FWA:  water                 
+    !  ras012 = 233     Initial:  water                 FWOA:  bare wetland         FWA:  bare wetland          
+    !  ras012 = 311     Initial:  bare wetland          FWOA:  vegetated wetland    FWA:  vegetated wetland     
+    !  ras012 = 312     Initial:  bare wetland          FWOA:  vegetated wetland    FWA:  water                 
+    !  ras012 = 313     Initial:  bare wetland          FWOA:  vegetated wetland    FWA:  bare wetland          
+    !  ras012 = 321     Initial:  bare wetland          FWOA:  water                FWA:  vegetated wetland     
+    !  ras012 = 322     Initial:  bare wetland          FWOA:  water                FWA:  water                 
+    !  ras012 = 323     Initial:  bare wetland          FWOA:  water                FWA:  bare wetland          
+    !  ras012 = 331     Initial:  bare wetland          FWOA:  bare wetland         FWA:  vegetated wetland     
+    !  ras012 = 332     Initial:  bare wetland          FWOA:  bare wetland         FWA:  water                 
+    !  ras012 = 333     Initial:  bare wetland          FWOA:  bare wetland         FWA:  bare wetland          ! no difference in landtype
+    !  ras012 = 444     Initial:  developed/upland      FWOA:  developed/upland     FWA:  developed/upland      ! no difference in landtype
+    !  ras012 = 511     Initial:  flotant               FWOA:  vegetated wetland    FWA:  vegetated wetland     
+    !  ras012 = 512     Initial:  flotant               FWOA:  vegetated wetland    FWA:  water                 
+    !  ras012 = 513     Initial:  flotant               FWOA:  vegetated wetland    FWA:  bare wetland          
+    !  ras012 = 515     Initial:  flotant               FWOA:  vegetated wetland    FWA:  flotant               
+    !  ras012 = 521     Initial:  flotant               FWOA:  water                FWA:  vegetated wetland     
+    !  ras012 = 522     Initial:  flotant               FWOA:  water                FWA:  water                 
+    !  ras012 = 523     Initial:  flotant               FWOA:  water                FWA:  bare wetland          
+    !  ras012 = 525     Initial:  flotant               FWOA:  water                FWA:  flotant               
+    !  ras012 = 531     Initial:  flotant               FWOA:  bare wetland         FWA:  vegetated wetland     
+    !  ras012 = 532     Initial:  flotant               FWOA:  bare wetland         FWA:  water                 
+    !  ras012 = 533     Initial:  flotant               FWOA:  bare wetland         FWA:  bare wetland          
+    !  ras012 = 535     Initial:  flotant               FWOA:  bare wetland         FWA:  flotant               
+    !  ras012 = 551     Initial:  flotant               FWOA:  flotant              FWA:  vegetated wetland     
+    !  ras012 = 552     Initial:  flotant               FWOA:  flotant              FWA:  water                 
+    !  ras012 = 553     Initial:  flotant               FWOA:  flotant              FWA:  bare wetland          
+    !  ras012 = 555     Initial:  flotant               FWOA:  flotant              FWA:  flotant               ! no difference in landtype
+    
+    ! ras012 combinations that should never occur
+    !  ras012 = 114     Initial:  vegetated wetland     FWOA:  vegetated wetland    FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 115     Initial:  vegetated wetland     FWOA:  vegetated wetland    FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 124     Initial:  vegetated wetland     FWOA:  water                FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 125     Initial:  vegetated wetland     FWOA:  water                FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 134     Initial:  vegetated wetland     FWOA:  bare wetland         FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 135     Initial:  vegetated wetland     FWOA:  bare wetland         FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 141     Initial:  vegetated wetland     FWOA:  developed/upland     FWA:  vegetated wetland     ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 142     Initial:  vegetated wetland     FWOA:  developed/upland     FWA:  water                 ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 143     Initial:  vegetated wetland     FWOA:  developed/upland     FWA:  bare wetland          ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 144     Initial:  vegetated wetland     FWOA:  developed/upland     FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 145     Initial:  vegetated wetland     FWOA:  developed/upland     FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 151     Initial:  vegetated wetland     FWOA:  flotant              FWA:  vegetated wetland     ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 152     Initial:  vegetated wetland     FWOA:  flotant              FWA:  water                 ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 153     Initial:  vegetated wetland     FWOA:  flotant              FWA:  bare wetland          ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 154     Initial:  vegetated wetland     FWOA:  flotant              FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 155     Initial:  vegetated wetland     FWOA:  flotant              FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 214     Initial:  water                 FWOA:  vegetated wetland    FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 215     Initial:  water                 FWOA:  vegetated wetland    FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 224     Initial:  water                 FWOA:  water                FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 225     Initial:  water                 FWOA:  water                FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 234     Initial:  water                 FWOA:  bare wetland         FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 235     Initial:  water                 FWOA:  bare wetland         FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 241     Initial:  water                 FWOA:  developed/upland     FWA:  vegetated wetland     ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 242     Initial:  water                 FWOA:  developed/upland     FWA:  water                 ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 243     Initial:  water                 FWOA:  developed/upland     FWA:  bare wetland          ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 244     Initial:  water                 FWOA:  developed/upland     FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 245     Initial:  water                 FWOA:  developed/upland     FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 251     Initial:  water                 FWOA:  flotant              FWA:  vegetated wetland     ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 252     Initial:  water                 FWOA:  flotant              FWA:  water                 ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 253     Initial:  water                 FWOA:  flotant              FWA:  bare wetland          ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 254     Initial:  water                 FWOA:  flotant              FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 255     Initial:  water                 FWOA:  flotant              FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 314     Initial:  bare wetland          FWOA:  vegetated wetland    FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 315     Initial:  bare wetland          FWOA:  vegetated wetland    FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 324     Initial:  bare wetland          FWOA:  water                FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 325     Initial:  bare wetland          FWOA:  water                FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 334     Initial:  bare wetland          FWOA:  bare wetland         FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 335     Initial:  bare wetland          FWOA:  bare wetland         FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 341     Initial:  bare wetland          FWOA:  developed/upland     FWA:  vegetated wetland     ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 342     Initial:  bare wetland          FWOA:  developed/upland     FWA:  water                 ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 343     Initial:  bare wetland          FWOA:  developed/upland     FWA:  bare wetland          ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 344     Initial:  bare wetland          FWOA:  developed/upland     FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 345     Initial:  bare wetland          FWOA:  developed/upland     FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 351     Initial:  bare wetland          FWOA:  flotant              FWA:  vegetated wetland     ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 352     Initial:  bare wetland          FWOA:  flotant              FWA:  water                 ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 353     Initial:  bare wetland          FWOA:  flotant              FWA:  bare wetland          ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 354     Initial:  bare wetland          FWOA:  flotant              FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 355     Initial:  bare wetland          FWOA:  flotant              FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 411     Initial:  developed/upland      FWOA:  vegetated wetland    FWA:  vegetated wetland     ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 412     Initial:  developed/upland      FWOA:  vegetated wetland    FWA:  water                 ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 413     Initial:  developed/upland      FWOA:  vegetated wetland    FWA:  bare wetland          ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 414     Initial:  developed/upland      FWOA:  vegetated wetland    FWA:  developed/upland      ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 415     Initial:  developed/upland      FWOA:  vegetated wetland    FWA:  flotant               ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 421     Initial:  developed/upland      FWOA:  water                FWA:  vegetated wetland     ! this combination should not appear since this process is not currently in ICM-Morph
+    !  ras012 = 422     Initial:  developed/upland      FWOA:  water                FWA:  water                 ! this combination should not appear since this process is not currently in ICM-Morph
+
+
