@@ -71,9 +71,8 @@ ENDIF()
 # ICM_Morph
 ###########################################################################
 SET( MORPH morph_diff_v${ICMMORPH_VERSION_STRING} )
-ADD_EXECUTABLE( ${MORPH} WM_DiffRasters.f90
-                               WM_DiffZ.f90
-                              WM_DiffLW.f90  )
+ADD_EXECUTABLE( ${MORPH} WM_DiffRasters_3ras.f90
+                              WM_DiffLW_3ras.f90  )
 
 SET_TARGET_PROPERTIES( ${MORPH} PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/CMakeFiles/mod)
 SET_TARGET_PROPERTIES( ${MORPH} PROPERTIES COMPILE_FLAGS "${Fortran_LINELENGTH_FLAG} ${Fortran_COMPILER_SPECIFIC_FLAG}" )
