@@ -18,10 +18,11 @@ subroutine DiffLW_3ras
     
 
     read(noData_str,*) noData
-
+    
+    allocate(ras2(nras))
     allocate(ras1(nras))
     allocate(ras0(nras))
-    allocate(ras01(nras))
+    allocate(ras012(nras))
     
     ras2    = 0
     ras1    = 0
