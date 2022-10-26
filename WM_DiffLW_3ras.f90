@@ -9,9 +9,10 @@ subroutine DiffLW_3ras
     implicit none
 
     
+    integer,dimension(:),allocatable :: ras2
     integer,dimension(:),allocatable :: ras1
     integer,dimension(:),allocatable :: ras0
-    integer,dimension(:),allocatable :: ras01
+    integer,dimension(:),allocatable :: ras012
     integer :: noData
     integer :: i
     
