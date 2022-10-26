@@ -70,7 +70,7 @@ ENDIF()
 ###########################################################################
 # ICM_Morph
 ###########################################################################
-SET( MORPH morph_diff_v${ICMMORPH_VERSION_STRING} )
+SET( MORPH morph_diff3_v${ICMMORPH_VERSION_STRING} )
 ADD_EXECUTABLE( ${MORPH} WM_DiffRasters_3ras.f90
                               WM_DiffLW_3ras.f90  )
 
