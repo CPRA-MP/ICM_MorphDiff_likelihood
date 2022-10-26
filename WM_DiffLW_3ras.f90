@@ -1,4 +1,4 @@
-subroutine DiffLW
+subroutine DiffLW_3ras
     ! lndtyp 1 = vegetated wetland
     ! lndtyp 2 = water
     ! lndtyp 3 = unvegetated wetland/new subaerial unvegetated mudflat (e.g., bare ground)
