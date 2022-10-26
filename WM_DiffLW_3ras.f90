@@ -57,36 +57,44 @@ subroutine DiffLW_3ras
     allocate(ras0(nras))
     allocate(ras01(nras))
     
-    ras1  = 0
-    ras0  = 0
-    ras01 = 0
+    ras2    = 0
+    ras1    = 0
+    ras0    = 0
+    ras012  = 0
     
     write(*,'(a,a)') 'comparing:  ', trim(adjustL(ras1_bin_pth))
     write(*,'(a,a)') '       to:  ', trim(adjustL(ras0_bin_pth))
     
-    open(unit=100, file = trim(adjustL(ras1_bin_pth)),form='unformatted')
-    read(100) ras1
+    open(unit=100, file = trim(adjustL(ras2_bin_pth)),form='unformatted')
+    read(100) ras2
     close(100)
 
-    open(unit=101, file = trim(adjustL(ras0_bin_pth)),form='unformatted')
-    read(101) ras0
+    open(unit=101, file = trim(adjustL(ras1_bin_pth)),form='unformatted')
+    read(101) ras1
     close(101)
-
+    
+    open(unit=102, file = trim(adjustL(ras0_bin_pth)),form='unformatted')
+    read(102) ras0
+    close(102)
+    
 
     do i=1,nras
-        if (ras1(i) == noData) then
-            ras01(i) = noData
+        if (ras2(i) == noData) then
+            ras012(i) = noData
+        elseif (ras1(i) == noData) then
+            ras012(i) = noData
         elseif (ras0(i) == noData) then
-            ras01(i) = noData
+            ras012(i) = noData
         else
-            ras01(i) = 10*ras0(i) + ras1(i)
+            ras012(i) = 100*ras0(i) + 10*ras1(i) + ras2(i)
         end if
     end do
 
-    open(unit=200, file = trim(adjustL(ras01_bin_pth)) , form='unformatted' )
-    write(*,'(A,A)') ' saved to: ',trim(adjustL(ras01_bin_pth))    
-    write(200) ras01
+    open(unit=200, file = trim(adjustL(ras012_bin_pth)) , form='unformatted' )
+    write(*,'(A,A)') ' saved to: ',trim(adjustL(ras012_bin_pth))    
+    write(200) ras012
     close(200)
+    
     
     return
 end
