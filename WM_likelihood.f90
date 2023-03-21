@@ -25,12 +25,12 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 module params
-    character*100 :: ras_list_pth                       ! input text string - file path to text file that contains filepaths to each raster to be used in analysis
-    character*100 :: ras_out_pth                        ! input text string - file path to output binary raster saved by this program
+    character*300 :: ras_list_pth                       ! input text string - file path to text file that contains filepaths to each raster to be used in analysis
+    character*300 :: ras_out_pth                        ! input text string - file path to output binary raster saved by this program
     character*20 :: ras_val_str                         ! input text string - exclusion value to be used for analysis - this value will be used to set what value to exclude from likelihood calculations (e.g., if set to 2, program will count likelihood of pixel NOT being equal to 2)
     character*20 :: noData_str                          ! input text string - no data value of raster (e.g., -9999)
     character*20 :: nras_str                            ! input text string - number of pixels in raster
-    character*100 :: ras_file_pth                       ! temp text string  - file path to raster being read for analysis
+    character*300 :: ras_file_pth                       ! temp text string  - file path to raster being read for analysis
     integer :: ras_val                                  ! integer version of ras_val_str
     integer :: nras                                     ! integer version of nras_str
     integer :: noData                                   ! integer version of noData_str
