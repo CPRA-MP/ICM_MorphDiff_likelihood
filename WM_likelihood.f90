@@ -75,10 +75,11 @@ program main
         if (io /= 0) exit
         ras_cnt = ras_cnt + 1
     end do
-    rewind(1)
+    close(1)
     write(*,'(A,I0,A)') 'Found ',ras_cnt,' rasters to compare.'
     
     ! loop over list of rasters and process each one at a time
+    open(unit=1, file=trim(adjustL(ras_list_pth)),status='old',action='read')
     do n = 1,ras_cnt
         input_ras = noData
         read(1,*) ras_file_pth
@@ -99,7 +100,6 @@ program main
             end if
         end do
     end do
-        
     close(1)
     
     ! write output file
