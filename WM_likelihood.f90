@@ -1,10 +1,10 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !                                                  
-!   ICM Wetland Morphology Raster Likelihood Coutns
+!   ICM Wetland Morphology Raster Likelihood Counts
 !                                                  
 !                                                  
-!   Fortran code to count the number of times each raster pixel is equal to a specific value.
-!   The value to count instances of is passed into the program as a runtime variable.
+!   Fortran code to count the number of times each raster pixel is not equal to a specific value.
+!   The value to count instances of non-equaliy is passed into the program as a runtime variable.
 !   The list of rasters (with full path) to be examined is passed in as a filepath.
 !   The raster types should be the binary rasters saved by ICM-Morph.
 !   
@@ -17,7 +17,7 @@
 !   5 = noData_str      : value of NoData in the input raster datasets
 !                                                  
 !   Questions: eric.white@la.gov                   
-!   last update: 03/16/2023
+!   last update: 03/21/2023
 !                                                     
 !   project site: https://github.com/CPRA-MP      
 !   documentation: http://coastal.la.gov/our-plan  
