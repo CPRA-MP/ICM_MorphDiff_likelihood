@@ -37,6 +37,7 @@ module params
     integer :: io                                       ! flag used for looping through raster file list
     integer :: ras_cnt                                  ! number of rasters being analyzed
     integer :: n,m                                      ! iterators
+    integer :: val                                      ! integer to temporarily store pixel value
     integer,dimension(:),allocatable :: count_ras       ! array that has the count, at each pixel, of the number of times each pixel was not equal to ras_val
     integer,dimension(:),allocatable :: input_ras       ! array used to store each individual raster read into program
 end module params
@@ -89,10 +90,12 @@ program main
         close(2)
         
         ! loop over landwater raster and add any non-water pixels to the overall count_ras
-        do n = 1,nras
-            val = nras(n)
-            if (val /= ras_val) then
-                count_ras(n) = count_ras(n) + 1
+        do m = 1,nras
+            val = input_ras(m)
+            if (val /= noData) then
+                if (val /= ras_val) then
+                    count_ras(m) = count_ras(m) + 1
+                end if
             end if
         end do
     end do
