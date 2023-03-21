@@ -97,6 +97,8 @@ program main
                 if (val /= ras_val) then
                     count_ras(m) = count_ras(m) + 1
                 end if
+            else
+                count_ras(m) = noData
             end if
         end do
     end do
