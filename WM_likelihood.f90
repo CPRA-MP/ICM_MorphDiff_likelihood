@@ -103,5 +103,5 @@ program main
     write(*,'(a)') 'Writing output file to ',trim(adjustL(ras_out_path))
     open(unit=3, file=trim(adjustL(ras_out_pth)),form='unformatted')
     write(3) count_ras
-    
+    close(3)
 end program
