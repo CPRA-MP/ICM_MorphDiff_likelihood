@@ -71,7 +71,7 @@ program main
     open(unit=1, file=trim(adjustL(ras_list_pth)),status='old',action='read')
     ras_cnt = 0
     do
-        read(1,*,*,iostat=io)
+        read(1,*,iostat=io)
         if (io /= 0) exit
         ras_cnt = ras_cnt + 1
     end do
