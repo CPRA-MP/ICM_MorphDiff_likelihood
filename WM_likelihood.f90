@@ -86,7 +86,7 @@ program main
         
         ! read in raster binary file
         write(*,'(A,A)') ' - reading in ', trim(adjustL(ras_file_pth))
-        open(unit=2,file=trim(adjustL(ras_file_pth)) )
+        open(unit=2,file=trim(adjustL(ras_file_pth)),form='unformatted')
         read(2) input_ras
         close(2)
         
