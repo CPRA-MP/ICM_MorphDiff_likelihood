@@ -80,11 +80,11 @@ program main
     ! loop over list of rasters and process each one at a time
     do n = 1,ras_cnt
         input_ras = noData
-        read(1,*) ras_file_path
+        read(1,*) ras_file_pth
         
         ! read in raster binary file
-        write(*,'(A,A)') ' - reading in ', trim(adjustL(ras_file_path))
-        open(unit=2,file=trim(adjustL(ras_file_path)) )
+        write(*,'(A,A)') ' - reading in ', trim(adjustL(ras_file_pth))
+        open(unit=2,file=trim(adjustL(ras_file_pth)) )
         read(2) input_ras
         close(2)
         
@@ -100,7 +100,7 @@ program main
     close(1)
     
     ! write output file
-    write(*,'(a)') 'Writing output file to ',trim(adjustL(ras_out_path))
+    write(*,'(a)') 'Writing output file to ',trim(adjustL(ras_out_pth))
     open(unit=3, file=trim(adjustL(ras_out_pth)),form='unformatted')
     write(3) count_ras
     close(3)
