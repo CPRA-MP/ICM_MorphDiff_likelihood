@@ -25,45 +25,48 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 module params
-    character*100 :: ras_list_pth
-    character*100 :: ras_out_pth
-    character*20 :: ras_val_str
-    character*20 :: noData_str
-    character*20 :: nras_str
-    integer,parameter :: sp=selected_real_kind(p=6) 
-    integer :: ras_val
-    integer :: nras
-    integer :: noData
-    integer :: io
-    integer :: ras_cnt
-    integer :: n
-    integer,dimension(:),allocatable :: count_ras
-    integer,dimension(:),allocatable :: input_ras
-    
-    
+    character*100 :: ras_list_pth                       ! input text string - file path to text file that contains filepaths to each raster to be used in analysis
+    character*100 :: ras_out_pth                        ! input text string - file path to output binary raster saved by this program
+    character*20 :: ras_val_str                         ! input text string - exclusion value to be used for analysis - this value will be used to set what value to exclude from likelihood calculations (e.g., if set to 2, program will count likelihood of pixel NOT being equal to 2)
+    character*20 :: noData_str                          ! input text string - no data value of raster (e.g., -9999)
+    character*20 :: nras_str                            ! input text string - number of pixels in raster
+    character*100 :: ras_file_pth                       ! temp text string  - file path to raster being read for analysis
+    integer :: ras_val                                  ! integer version of ras_val_str
+    integer :: nras                                     ! integer version of nras_str
+    integer :: noData                                   ! integer version of noData_str
+    integer :: io                                       ! flag used for looping through raster file list
+    integer :: ras_cnt                                  ! number of rasters being analyzed
+    integer :: n,m                                      ! iterators
+    integer,dimension(:),allocatable :: count_ras       ! array that has the count, at each pixel, of the number of times each pixel was not equal to ras_val
+    integer,dimension(:),allocatable :: input_ras       ! array used to store each individual raster read into program
 end module params
     
 program main
     use params
     implicit none
+    
+    ! read in input variables passed into executable
     call GET_COMMAND_ARGUMENT(1,ras_list_pth)
     call GET_COMMAND_ARGUMENT(2,ras_out_pth)
     call GET_COMMAND_ARGUMENT(3,ras_val_str)
     call GET_COMMAND_ARGUMENT(4,nras_str)
     call GET_COMMAND_ARGUMENT(5,noData_str)
     
+    ! convert text variables read in into integers
     read(ras_val_str,*) ras_val
     read(nras_str,*) nras
     read(noData_str,*) noData
     
+    ! allocate and intialize arrays
     allocate(count_ras(nras))
-    allocate(input_ras(nras))
-    
     count_ras = 0
+    
+    allocate(input_ras(nras))
     input_ras = noData
     
+       
+    ! read in list of rasters to be included in this analysis
     write(*,'(a)') 'Reading in list of rasters to analyze.'
-    
     open(unit=1, file=trim(adjustL(ras_list_pth)),status='old',action='read')
     ras_cnt = 0
     do
@@ -71,17 +74,34 @@ program main
         if (io /= 0) exit
         ras_cnt = ras_cnt + 1
     end do
-    
+    rewind(1)
     write(*,'(A,I0,A)') 'Found ',ras_cnt,' rasters to compare.'
     
-    rewind(2)
+    ! loop over list of rasters and process each one at a time
     do n = 1,ras_cnt
-            
-    
-    
-    
+        input_ras = noData
+        read(1,*) ras_file_path
+        
+        ! read in raster binary file
+        write(*,'(A,A)') ' - reading in ', trim(adjustL(ras_file_path))
+        open(unit=2,file=trim(adjustL(ras_file_path))
+        read(2) input_ras
+        close(2)
+        
+        ! loop over landwater raster and add any non-water pixels to the overall count_ras
+        do n = 1,nras
+            val = nras(n)
+            if (val /= ras_val) then
+                count_ras(n) = count_ras(n) + 1
+            end if
+        end do
+    end do
+        
     close(1)
     
-    
+    ! write output file
+    write(*,'(a)') 'Writing output file to ',trim(adjustL(ras_out_path))
+    open(unit=3, file=trim(adjustL(ras_out_pth)),form='unformatted')
+    write(3) count_ras
     
 end program
